@@ -19,8 +19,9 @@ int main() {
     window.setLayout(new nanogui::GroupLayout());
     nanogui::Button *b =new nanogui::Button(&window, "My Button");
 
-    b->setCallback([] {
+    b->setCallback([&window] {
         cout << "Button pressed!" << endl;
+        window.setVisible(false);
     });
 
     screen.performLayout();
