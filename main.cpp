@@ -1,5 +1,3 @@
-#define GL_SILENCE_DEPRECATION
-
 #include <iostream>
 
 #include <nanogui/screen.h>
@@ -13,15 +11,15 @@ int main() {
 
     nanogui::init();
 
-    nanogui::Screen screen{{600, 420}, "Screen"};
+    nanogui::Screen screen{{1280, 720}, "Screen", {}, true};
     nanogui::Window window{&screen, "Window"};
     window.setPosition({15, 15});
     window.setLayout(new nanogui::GroupLayout());
     nanogui::Button *b =new nanogui::Button(&window, "My Button");
 
-    b->setCallback([&window] {
+    b->setCallback([] {
         cout << "Button pressed!" << endl;
-        window.setVisible(false);
+        exit(EXIT_SUCCESS);
     });
 
     screen.performLayout();
