@@ -6,8 +6,10 @@
 
 Game::Game()
 {
-    //TODO:handle glfw events myself
+    //start up opengl
     init_glfw();
+
+    //TODO:create input manager for glfw input events
 
     mScreen = new nanogui::Screen{{1280, 720}, "Editor", {}, true};
     mMenu = new Menu(*mScreen);
