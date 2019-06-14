@@ -13,6 +13,7 @@ public:
     //retrieves *this* pointer from GLFW's getWindowUserPointer
     static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
 
+    void moveTextBox(double distance);
 private:
     //only a handle. do not delete this!
     nanogui::Screen* mScreen;

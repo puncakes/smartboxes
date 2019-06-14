@@ -44,3 +44,11 @@ void Menu::cursor_position_callback(GLFWwindow *window, double xpos, double ypos
     //since i overwrote the callback, send the input back to the screen
     m->mScreen->cursorPosCallbackEvent(xpos, ypos);
 }
+
+void Menu::moveTextBox(double distance)
+{
+    auto pos = mWindow->position();
+    auto x = pos[0];
+    x += distance;
+    mWindow->setPosition({x, pos[1]});
+}

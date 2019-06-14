@@ -47,7 +47,8 @@ void Game::game_loop()
 
             auto timeNow = std::chrono::high_resolution_clock::now();
 
-            double deltaTime = std::chrono::duration<double, std::milli>(prevUpdateTimeInMills-timeNow).count();
+            double deltaTime = std::chrono::duration<double, std::milli>(timeNow - prevUpdateTimeInMills).count();
+            deltaTime /= 1000.0;
 
             nanogui::Screen *screen = mScreen;
             if (!screen->visible()) {
@@ -99,5 +100,5 @@ void Game::init_glfw()
 
 void Game::update(double timeDelta)
 {
-
+    mMenu->moveTextBox(timeDelta);
 }
