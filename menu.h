@@ -15,6 +15,7 @@ public:
 
     void moveTextBox(double distance);
 private:
+    double mWindowPosX = 15;
     //only a handle. do not delete this!
     nanogui::Screen* mScreen;
 

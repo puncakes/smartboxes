@@ -47,8 +47,7 @@ void Menu::cursor_position_callback(GLFWwindow *window, double xpos, double ypos
 
 void Menu::moveTextBox(double distance)
 {
-    auto pos = mWindow->position();
-    auto x = pos[0];
-    x += distance;
-    mWindow->setPosition({x, pos[1]});
+    double scalar = 10.0;
+    mWindowPosX += distance * scalar;
+    mWindow->setPosition({mWindowPosX, 15});
 }

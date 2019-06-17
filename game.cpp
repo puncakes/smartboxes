@@ -1,8 +1,10 @@
 #include "game.h"
+#include "physicshelper.h"
 
 #include <GLFW/glfw3.h>
 #include <chrono>
 #include <iostream>
+#include <memory>
 
 Game::Game()
 {
@@ -13,6 +15,11 @@ Game::Game()
 
     mScreen = new nanogui::Screen{{1280, 720}, "Editor", {}, true};
     mMenu = new Menu(*mScreen);
+
+    mWorld = std::make_unique<b2World>(b2Vec2(0, 0));
+    mWorld->SetDebugDraw(&mDebugDraw);
+    auto body = PhysicsHelper::createBox(mWorld.get());
+
 }
 Game::~Game() {
     delete mMenu;
@@ -47,8 +54,10 @@ void Game::game_loop()
 
             auto timeNow = std::chrono::high_resolution_clock::now();
 
-            double deltaTime = std::chrono::duration<double, std::milli>(timeNow - prevUpdateTimeInMills).count();
-            deltaTime /= 1000.0;
+            double timeDelta = std::chrono::duration<double, std::milli>(timeNow - prevUpdateTimeInMills).count();
+            timeDelta /= 1000.0; // in seconds
+
+            //std::cout << std::to_string(timeDelta) << std::endl;
 
             nanogui::Screen *screen = mScreen;
             if (!screen->visible()) {
@@ -58,14 +67,44 @@ void Game::game_loop()
                 continue;
             }
 
+            glClearColor( 0.0f, 0.0f, 0.0f, 0.0f ); //clear background screen to black
+
+            //Clear information from last draw
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+
+
+            glMatrixMode(GL_PROJECTION);
+                glPushMatrix();
+                glLoadIdentity();
+                glOrtho(-2.0,2.0,-2.0,2.0,-2.0,2.0);
+
+            glMatrixMode(GL_MODELVIEW);
+                glPushMatrix();//Switch to the drawing perspective
+                glLoadIdentity(); //Reset the drawing perspective
+
+
+            //draw box2d debug info
+            mWorld->DrawDebugData();
+            glFlush();
+
+            glPopMatrix();
+
+            glMatrixMode(GL_PROJECTION);
+                glPopMatrix();
+
             //nanogui draw
-            screen->drawAll();
+            screen->drawWidgets();
 
             //main update
-            update(deltaTime);
+            update(timeDelta);
 
-            /* Wait for mouse/keyboard or empty refresh events */
-            glfwWaitEvents();
+            /* poll for mouse/keyboard or empty refresh events */
+            glfwPollEvents();
+
+            glfwSwapBuffers(mScreen->glfwWindow());
+
+            prevUpdateTimeInMills = timeNow;
         }
 
         /* Process events once more */
