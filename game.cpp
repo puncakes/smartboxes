@@ -12,12 +12,22 @@ Game::Game()
     init_glfw();
 
     //TODO:create input manager for glfw input events
-
-    mScreen = new nanogui::Screen{{1280, 720}, "Editor", {}, true};
     mMenu = new Menu(*mScreen);
 
     mWorld = std::make_unique<b2World>(b2Vec2(0, 0));
-    mWorld->SetDebugDraw(&mDebugDraw);
+
+    //g_debugDraw.Create();
+
+    uint32 flags = 0;
+    flags += b2Draw::e_shapeBit;
+    flags += b2Draw::e_jointBit;
+    flags += b2Draw::e_aabbBit;
+    flags += b2Draw::e_pairBit;
+    flags += b2Draw::e_centerOfMassBit;
+    //g_debugDraw.SetFlags(flags);
+
+    //mWorld->SetDebugDraw(&g_debugDraw);
+
     auto body = PhysicsHelper::createBox(mWorld.get());
 
 }
@@ -33,7 +43,6 @@ void Game::run()
 
     mScreen->performLayout();
 
-    mScreen->drawAll();
     mScreen->setVisible(true);
 
     //start the main game loop
@@ -59,50 +68,35 @@ void Game::game_loop()
 
             //std::cout << std::to_string(timeDelta) << std::endl;
 
-            nanogui::Screen *screen = mScreen;
-            if (!screen->visible()) {
+            if (!mScreen->visible()) {
                 continue;
-            } else if (glfwWindowShouldClose(screen->glfwWindow())) {
-                screen->setVisible(false);
+            } else if (glfwWindowShouldClose(mScreen->glfwWindow())) {
+                mScreen->setVisible(false);
                 continue;
             }
 
-            glClearColor( 0.0f, 0.0f, 0.0f, 0.0f ); //clear background screen to black
+            glClearColor( 0.0f, 0.0f, 0.0f, 1.0f ); //clear background screen to black
 
             //Clear information from last draw
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-
-
-            glMatrixMode(GL_PROJECTION);
-                glPushMatrix();
-                glLoadIdentity();
-                glOrtho(-2.0,2.0,-2.0,2.0,-2.0,2.0);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             glMatrixMode(GL_MODELVIEW);
-                glPushMatrix();//Switch to the drawing perspective
-                glLoadIdentity(); //Reset the drawing perspective
+            glLoadIdentity();
 
-
+            //glFlush();
             //draw box2d debug info
-            mWorld->DrawDebugData();
-            glFlush();
-
-            glPopMatrix();
-
-            glMatrixMode(GL_PROJECTION);
-                glPopMatrix();
+            //mWorld->DrawDebugData();
 
             //nanogui draw
-            screen->drawWidgets();
+            mScreen->drawWidgets();
 
             //main update
             update(timeDelta);
 
+            glfwSwapBuffers(mGLFWindow);
+
             /* poll for mouse/keyboard or empty refresh events */
             glfwPollEvents();
-
-            glfwSwapBuffers(mScreen->glfwWindow());
 
             prevUpdateTimeInMills = timeNow;
         }
@@ -135,6 +129,14 @@ void Game::init_glfw()
         throw std::runtime_error("Could not initialize GLFW!");
 
     glfwSetTime(0);
+
+    mScreen = new nanogui::Screen{{1280, 720}, "Editor", {}, true};
+
+    mGLFWindow = mScreen->glfwWindow();
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0.0, mScreen->width(), 0.0, mScreen->height(), 0.0, 1.0); // this creates a canvas you can do 2D drawing on
 }
 
 void Game::update(double timeDelta)

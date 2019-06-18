@@ -2,10 +2,10 @@
 #define GAME_H
 
 #include "menu.h"
-#include "debugdraw.h"
 
 #include <nanogui/screen.h>
 #include <Box2D/Box2D.h>
+#include <Testbed/Framework/DebugDraw.h>
 #include <chrono>
 
 class Game
@@ -16,10 +16,9 @@ public:
 
     void run();
 private:
-    Menu *mMenu;
-    nanogui::Screen *mScreen;
-    DebugDraw mDebugDraw;
-
+    Menu* mMenu;
+    nanogui::Screen* mScreen;
+    GLFWwindow* mGLFWindow;
 
     bool mainloop_active = false;
 
