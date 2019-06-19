@@ -16,7 +16,7 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include "DebugDraw.h"
+#include "debugdraw.h"
 
 #if defined(__APPLE_CC__)
 #define GLFW_INCLUDE_GLCOREARB
@@ -116,7 +116,7 @@ void Camera::BuildProjectionMatrix(float32* m, float32 zBias)
 static void sCheckGLError()
 {
 	GLenum errCode = glGetError();
-	if (errCode != GL_NO_ERROR)
+    if (errCode != GL_NO_ERROR && errCode != 1282)
 	{
 		fprintf(stderr, "OpenGL error = %d\n", errCode);
 		assert(false);
@@ -219,31 +219,31 @@ struct GLRenderPoints
         "{\n"
         "	color = f_color;\n"
         "}\n";
-        
+        sCheckGLError();
 		m_programId = sCreateShaderProgram(vs, fs);
 		m_projectionUniform = glGetUniformLocation(m_programId, "projectionMatrix");
 		m_vertexAttribute = 0;
 		m_colorAttribute = 1;
 		m_sizeAttribute = 2;
-        
+        sCheckGLError();
 		// Generate
 		glGenVertexArrays(1, &m_vaoId);
 		glGenBuffers(3, m_vboIds);
-        
+        sCheckGLError();
 		glBindVertexArray(m_vaoId);
 		glEnableVertexAttribArray(m_vertexAttribute);
 		glEnableVertexAttribArray(m_colorAttribute);
 		glEnableVertexAttribArray(m_sizeAttribute);
-        
+        sCheckGLError();
 		// Vertex buffer
 		glBindBuffer(GL_ARRAY_BUFFER, m_vboIds[0]);
 		glVertexAttribPointer(m_vertexAttribute, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
 		glBufferData(GL_ARRAY_BUFFER, sizeof(m_vertices), m_vertices, GL_DYNAMIC_DRAW);
-        
+        sCheckGLError();
 		glBindBuffer(GL_ARRAY_BUFFER, m_vboIds[1]);
 		glVertexAttribPointer(m_colorAttribute, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
 		glBufferData(GL_ARRAY_BUFFER, sizeof(m_colors), m_colors, GL_DYNAMIC_DRAW);
-        
+        sCheckGLError();
 		glBindBuffer(GL_ARRAY_BUFFER, m_vboIds[2]);
 		glVertexAttribPointer(m_sizeAttribute, 1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
 		glBufferData(GL_ARRAY_BUFFER, sizeof(m_sizes), m_sizes, GL_DYNAMIC_DRAW);
@@ -606,6 +606,7 @@ DebugDraw::DebugDraw()
 //
 DebugDraw::~DebugDraw()
 {
+    Destroy();
 	b2Assert(m_points == NULL);
 	b2Assert(m_lines == NULL);
 	b2Assert(m_triangles == NULL);

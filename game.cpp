@@ -1,6 +1,8 @@
 #include "game.h"
 #include "physicshelper.h"
 
+#include "debugdraw.h"
+
 #include <GLFW/glfw3.h>
 #include <chrono>
 #include <iostream>
@@ -16,7 +18,7 @@ Game::Game()
 
     mWorld = std::make_unique<b2World>(b2Vec2(0, 0));
 
-    //g_debugDraw.Create();
+    g_debugDraw.Create();
 
     uint32 flags = 0;
     flags += b2Draw::e_shapeBit;
@@ -24,9 +26,9 @@ Game::Game()
     flags += b2Draw::e_aabbBit;
     flags += b2Draw::e_pairBit;
     flags += b2Draw::e_centerOfMassBit;
-    //g_debugDraw.SetFlags(flags);
+    g_debugDraw.SetFlags(flags);
 
-    //mWorld->SetDebugDraw(&g_debugDraw);
+    mWorld->SetDebugDraw(&g_debugDraw);
 
     auto body = PhysicsHelper::createBox(mWorld.get());
 
@@ -78,14 +80,12 @@ void Game::game_loop()
             glClearColor( 0.0f, 0.0f, 0.0f, 1.0f ); //clear background screen to black
 
             //Clear information from last draw
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-            glMatrixMode(GL_MODELVIEW);
-            glLoadIdentity();
+            glClear(GL_COLOR_BUFFER_BIT);
 
             //glFlush();
             //draw box2d debug info
-            //mWorld->DrawDebugData();
+            mWorld->DrawDebugData();
+            g_debugDraw.Flush();
 
             //nanogui draw
             mScreen->drawWidgets();

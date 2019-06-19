@@ -5,7 +5,6 @@
 
 #include <nanogui/screen.h>
 #include <Box2D/Box2D.h>
-#include <Testbed/Framework/DebugDraw.h>
 #include <chrono>
 
 class Game
