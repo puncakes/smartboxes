@@ -13,7 +13,7 @@ b2Body* PhysicsHelper::createBox(b2World* world)
     auto myBody = world->CreateBody(&myBodyDef);
 
     b2PolygonShape boxShape;
-    boxShape.SetAsBox(1,1);
+    boxShape.SetAsBox(5,5);
 
     b2FixtureDef boxFixtureDef;
     boxFixtureDef.shape = &boxShape;

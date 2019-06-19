@@ -85,8 +85,8 @@ void Camera::BuildProjectionMatrix(float32* m, float32 zBias)
 	float32 w = float32(m_width);
 	float32 h = float32(m_height);
 	float32 ratio = w / h;
-	b2Vec2 extents(ratio * 25.0f, 25.0f);
-	extents *= m_zoom;
+    b2Vec2 extents(w/2, h/2);
+    extents *= m_zoom;
 
 	b2Vec2 lower = m_center - extents;
 	b2Vec2 upper = m_center + extents;
@@ -219,31 +219,31 @@ struct GLRenderPoints
         "{\n"
         "	color = f_color;\n"
         "}\n";
-        sCheckGLError();
+
 		m_programId = sCreateShaderProgram(vs, fs);
 		m_projectionUniform = glGetUniformLocation(m_programId, "projectionMatrix");
 		m_vertexAttribute = 0;
 		m_colorAttribute = 1;
-		m_sizeAttribute = 2;
-        sCheckGLError();
+        m_sizeAttribute = 2;
+
 		// Generate
 		glGenVertexArrays(1, &m_vaoId);
-		glGenBuffers(3, m_vboIds);
-        sCheckGLError();
+        glGenBuffers(3, m_vboIds);
+
 		glBindVertexArray(m_vaoId);
 		glEnableVertexAttribArray(m_vertexAttribute);
 		glEnableVertexAttribArray(m_colorAttribute);
-		glEnableVertexAttribArray(m_sizeAttribute);
-        sCheckGLError();
+        glEnableVertexAttribArray(m_sizeAttribute);
+
 		// Vertex buffer
 		glBindBuffer(GL_ARRAY_BUFFER, m_vboIds[0]);
 		glVertexAttribPointer(m_vertexAttribute, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
-		glBufferData(GL_ARRAY_BUFFER, sizeof(m_vertices), m_vertices, GL_DYNAMIC_DRAW);
-        sCheckGLError();
+        glBufferData(GL_ARRAY_BUFFER, sizeof(m_vertices), m_vertices, GL_DYNAMIC_DRAW);
+
 		glBindBuffer(GL_ARRAY_BUFFER, m_vboIds[1]);
 		glVertexAttribPointer(m_colorAttribute, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
-		glBufferData(GL_ARRAY_BUFFER, sizeof(m_colors), m_colors, GL_DYNAMIC_DRAW);
-        sCheckGLError();
+        glBufferData(GL_ARRAY_BUFFER, sizeof(m_colors), m_colors, GL_DYNAMIC_DRAW);
+
 		glBindBuffer(GL_ARRAY_BUFFER, m_vboIds[2]);
 		glVertexAttribPointer(m_sizeAttribute, 1, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
 		glBufferData(GL_ARRAY_BUFFER, sizeof(m_sizes), m_sizes, GL_DYNAMIC_DRAW);

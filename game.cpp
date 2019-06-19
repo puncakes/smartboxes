@@ -82,6 +82,7 @@ void Game::game_loop()
             //Clear information from last draw
             glClear(GL_COLOR_BUFFER_BIT);
 
+            mWorld->Step(timeDelta, 1, 1);
             //glFlush();
             //draw box2d debug info
             mWorld->DrawDebugData();
@@ -134,9 +135,14 @@ void Game::init_glfw()
 
     mGLFWindow = mScreen->glfwWindow();
 
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glOrtho(0.0, mScreen->width(), 0.0, mScreen->height(), 0.0, 1.0); // this creates a canvas you can do 2D drawing on
+    g_camera.m_width = mScreen->width();
+    g_camera.m_height = mScreen->height();
+
+    //set camera to map pixels to world coordinates initially
+    //g_camera.m_center.Set(mScreen->width() / 2, mScreen->height() / 2);
+    g_camera.m_center.Set(0,0);
+
+    g_camera.m_zoom = 1.0f / 20.0f;
 }
 
 void Game::update(double timeDelta)
