@@ -21,10 +21,6 @@ Menu::Menu(nanogui::Screen& screen)
     b->setCallback([] {
         exit(EXIT_SUCCESS);
     });
-
-    glfwSetWindowUserPointer(screen.glfwWindow(), this);
-
-    glfwSetCursorPosCallback(screen.glfwWindow(), Menu::cursor_position_callback);
 }
 
 Menu::~Menu()
@@ -33,16 +29,12 @@ Menu::~Menu()
     delete mWindow;
 }
 
-void Menu::cursor_position_callback(GLFWwindow *window, double xpos, double ypos)
+bool Menu::cursor_position_callback(double xpos, double ypos)
 {
-    Menu* m = static_cast<Menu*>(glfwGetWindowUserPointer(window));
-
-    m->mTextBox->setValue(std::to_string(static_cast<int>(xpos)) +
+    mTextBox->setValue(std::to_string(static_cast<int>(xpos)) +
                           " " +
                           std::to_string(static_cast<int>(ypos)));
-
-    //since i overwrote the callback, send the input back to the screen
-    m->mScreen->cursorPosCallbackEvent(xpos, ypos);
+    return true;
 }
 
 void Menu::moveTextBox(double distance)

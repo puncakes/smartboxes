@@ -1,5 +1,6 @@
 #include "game.h"
 #include "physicshelper.h"
+#include "inputmanager.h"
 
 #include "debugdraw.h"
 
@@ -13,8 +14,31 @@ Game::Game()
     //start up opengl
     init_glfw();
 
-    //TODO:create input manager for glfw input events
+    //sets the input manager as the default handler of glfw input events
+    InputManager::registerWithGLFW(*mScreen->glfwWindow());
+
     mMenu = new Menu(*mScreen);
+
+    //creates and sets some callbacks for input events for the menus
+    auto menuMousePosTuple = std::make_tuple("menu",
+                                [=](double x, double y) {
+                                    return mMenu->cursor_position_callback(x,y);
+    });
+
+    auto screenMousePosTuple = std::make_tuple("screen",
+                                [=](double x, double y) {
+                                    return mScreen->cursorPosCallbackEvent(x,y);
+    });
+
+    auto menuMouseButtonTuple = std::make_tuple("menu",
+                                [=](int button, int action, int modifiers) {
+                                    return mScreen->mouseButtonCallbackEvent(button, action, modifiers);
+    });
+
+    InputManager::addMousePositionCallback(std::move(menuMousePosTuple));
+    InputManager::addMousePositionCallback(std::move(screenMousePosTuple));
+    InputManager::addMouseButtonCallback(std::move(menuMouseButtonTuple));
+
 
     mWorld = std::make_unique<b2World>(b2Vec2(0, 0));
 

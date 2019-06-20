@@ -10,8 +10,7 @@ public:
     Menu(nanogui::Screen& screen);
     ~Menu();
 
-    //retrieves *this* pointer from GLFW's getWindowUserPointer
-    static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
+    bool cursor_position_callback(double xpos, double ypos);
 
     void moveTextBox(double distance);
 private:
