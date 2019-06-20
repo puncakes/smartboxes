@@ -155,7 +155,7 @@ void Game::init_glfw()
 
     glfwSetTime(0);
 
-    mScreen = new nanogui::Screen{{1280, 720}, "Editor", {}, true};
+    mScreen = new nanogui::Screen{{1280, 720}, "Editor", {}, false};
 
     mGLFWindow = mScreen->glfwWindow();
 

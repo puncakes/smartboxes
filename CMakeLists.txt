@@ -4,6 +4,11 @@ project(Editor)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 set(CMAKE_CXX_STANDARD 14)
 
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BUILD_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BUILD_DIR}/bin)
+
+message (build dir: ${CMAKE_BUILD_DIR})
+
 add_compile_definitions(GL_SILENCE_DEPRECATION)
 
 add_subdirectory(lib/nanogui)
