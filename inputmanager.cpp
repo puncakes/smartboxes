@@ -29,7 +29,6 @@ bool InputManager::addKeyCallback(KeyCallback &&callback)
     return true;
 }
 
-
 //section loops through registered callbacks and passes on input events
 void InputManager::mainMousePositionCallback(GLFWwindow *window, double x, double y)
 {

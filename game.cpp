@@ -35,12 +35,19 @@ Game::Game()
                                     return mScreen->mouseButtonCallbackEvent(button, action, modifiers);
     });
 
+    auto gameMouseButtonTuple = std::make_tuple("game",
+                                                [=](int button, int action, int modifiers) {
+        return this->mouseButtonEvent(button, action, modifiers);
+    });
+
     InputManager::addMousePositionCallback(std::move(menuMousePosTuple));
     InputManager::addMousePositionCallback(std::move(screenMousePosTuple));
     InputManager::addMouseButtonCallback(std::move(menuMouseButtonTuple));
+    InputManager::addMouseButtonCallback(std::move(gameMouseButtonTuple));
 
+    mWorld = std::make_unique<b2World>(b2Vec2(0, -9.8f));
 
-    mWorld = std::make_unique<b2World>(b2Vec2(0, 0));
+    PhysicsHelper::createGround(mWorld.get());
 
     g_debugDraw.Create();
 
@@ -53,8 +60,6 @@ Game::Game()
     g_debugDraw.SetFlags(flags);
 
     mWorld->SetDebugDraw(&g_debugDraw);
-
-    auto body = PhysicsHelper::createBox(mWorld.get());
 
 }
 Game::~Game() {
@@ -106,7 +111,7 @@ void Game::game_loop()
             //Clear information from last draw
             glClear(GL_COLOR_BUFFER_BIT);
 
-            mWorld->Step(timeDelta, 1, 1);
+            mWorld->Step(timeDelta, 10, 10);
             //glFlush();
             //draw box2d debug info
             mWorld->DrawDebugData();
@@ -132,6 +137,40 @@ void Game::game_loop()
         std::cerr << "Caught exception in main loop: " << e.what() << std::endl;
         mainloop_active = false;
     }
+}
+
+bool Game::mouseButtonEvent(int button, int action, int modifiers)
+{
+    double xd, yd;
+    glfwGetCursorPos(mScreen->glfwWindow(), &xd, &yd);
+    b2Vec2 ps((float32)xd, (float32)yd);
+
+    // Use the mouse to move things around.
+    if (button == GLFW_MOUSE_BUTTON_1)
+    {
+        //<##>
+        //ps.Set(0, 0);
+        b2Vec2 pw = g_camera.ConvertScreenToWorld(ps);
+        if (action == GLFW_PRESS)
+        {
+            if (modifiers == GLFW_MOD_SHIFT)
+            {
+                //test->ShiftMouseDown(pw);
+            }
+            else
+            {
+                //test->MouseDown(pw);
+            }
+        }
+
+        if (action == GLFW_RELEASE)
+        {
+            //create box on release
+            PhysicsHelper::createBox(mWorld.get(), pw.x, pw.y);
+        }
+    }
+
+    return true;
 }
 
 
@@ -166,7 +205,7 @@ void Game::init_glfw()
     //g_camera.m_center.Set(mScreen->width() / 2, mScreen->height() / 2);
     g_camera.m_center.Set(0,0);
 
-    g_camera.m_zoom = 1.0f / 20.0f;
+    g_camera.m_zoom = 1.0f / 2.0f;
 }
 
 void Game::update(double timeDelta)

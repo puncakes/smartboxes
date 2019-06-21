@@ -85,7 +85,7 @@ void Camera::BuildProjectionMatrix(float32* m, float32 zBias)
 	float32 w = float32(m_width);
 	float32 h = float32(m_height);
 	float32 ratio = w / h;
-    b2Vec2 extents(w/2, h/2);
+    b2Vec2 extents(ratio * 25.0f, 25.0f);
     extents *= m_zoom;
 
 	b2Vec2 lower = m_center - extents;

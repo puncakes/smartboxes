@@ -26,6 +26,9 @@ private:
     void init_glfw();
     void game_loop();
 
+
+    bool mouseButtonEvent(int button, int action, int modifiers);
+
     //perform update of game state
     //passing in time delta since last update
     void update(double timeDelta);
