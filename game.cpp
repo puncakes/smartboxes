@@ -19,29 +19,35 @@ Game::Game()
 
     mMenu = new Menu(*mScreen);
 
-    //creates and sets some callbacks for input events for the menus
+    //create callbacks for input events
     auto menuMousePosTuple = std::make_tuple("menu",
-                                [=](double x, double y) {
-                                    return mMenu->cursor_position_callback(x,y);
+        [=](double x, double y) {
+            return mMenu->cursor_position_callback(x,y);
     });
 
     auto screenMousePosTuple = std::make_tuple("screen",
-                                [=](double x, double y) {
-                                    return mScreen->cursorPosCallbackEvent(x,y);
+        [=](double x, double y) {
+            return mScreen->cursorPosCallbackEvent(x,y);
     });
 
     auto menuMouseButtonTuple = std::make_tuple("menu",
-                                [=](int button, int action, int modifiers) {
-                                    return mScreen->mouseButtonCallbackEvent(button, action, modifiers);
+        [=](int button, int action, int modifiers) {
+            return mScreen->mouseButtonCallbackEvent(button, action, modifiers);
     });
 
     auto gameMouseButtonTuple = std::make_tuple("game",
-                                                [=](int button, int action, int modifiers) {
-        return this->mouseButtonEvent(button, action, modifiers);
+        [=](int button, int action, int modifiers) {
+            return this->mouseButtonEvent(button, action, modifiers);
     });
 
+    //events are processed in queue priority
+    //general idea is a callback returns false if it consumed the input
+
+    //mouse position callback queue
     InputManager::addMousePositionCallback(std::move(menuMousePosTuple));
     InputManager::addMousePositionCallback(std::move(screenMousePosTuple));
+
+    //mouse button callback queue
     InputManager::addMouseButtonCallback(std::move(menuMouseButtonTuple));
     InputManager::addMouseButtonCallback(std::move(gameMouseButtonTuple));
 
@@ -54,7 +60,7 @@ Game::Game()
     uint32 flags = 0;
     flags += b2Draw::e_shapeBit;
     flags += b2Draw::e_jointBit;
-    flags += b2Draw::e_aabbBit;
+    //flags += b2Draw::e_aabbBit;
     flags += b2Draw::e_pairBit;
     flags += b2Draw::e_centerOfMassBit;
     g_debugDraw.SetFlags(flags);
