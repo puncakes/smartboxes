@@ -36,7 +36,9 @@ void InputManager::mainMousePositionCallback(GLFWwindow *window, double x, doubl
         auto cbDest = std::get<0>(cb);
         auto cbFunc = std::get<1>(cb);
 
-        cbFunc(x, y);
+        if(cbFunc(x, y)) {
+            break;
+        }
     }
 }
 
@@ -46,7 +48,9 @@ void InputManager::mainMouseButtonCallback(GLFWwindow *window, int button, int a
         auto cbDest = std::get<0>(cb);
         auto cbFunc = std::get<1>(cb);
 
-        cbFunc(button, action, modifiers);
+        if(cbFunc(button, action, modifiers)) {
+            break;
+        }
     }
 }
 
@@ -56,6 +60,8 @@ void InputManager::mainKeyCallback(GLFWwindow *window, int key, int scancode, in
         auto cbDest = std::get<0>(cb);
         auto cbFunc = std::get<1>(cb);
 
-        cbFunc(key, scancode, action, mods);
+        if(cbFunc(key, scancode, action, mods)) {
+            break;
+        }
     }
 }

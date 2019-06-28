@@ -1,5 +1,5 @@
 #include "physicshelper.h"
-
+#include "utils.h"
 
 b2Body* PhysicsHelper::createBox(b2World* world, float32 x, float32 y)
 {
@@ -18,6 +18,7 @@ b2Body* PhysicsHelper::createBox(b2World* world, float32 x, float32 y)
     b2FixtureDef boxFixtureDef;
     boxFixtureDef.shape = &boxShape;
     boxFixtureDef.density = 1;
+    boxFixtureDef.restitution = 0.5;
 
     myBody->CreateFixture(&boxFixtureDef);
 
@@ -45,4 +46,17 @@ b2Body* PhysicsHelper::createGround(b2World* world)
     myBody->CreateFixture(&boxFixtureDef);
 
     return myBody;
+}
+
+void PhysicsHelper::reshapeBox(b2Body* body, float32 x, float32 y)
+{
+    assert(body != nullptr);
+
+    for (b2Fixture* f = body->GetFixtureList(); f; f = f->GetNext())
+    {
+        if(instanceof<b2PolygonShape>(f->GetShape())) {
+
+        }
+    }
+
 }

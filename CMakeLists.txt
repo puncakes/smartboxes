@@ -18,6 +18,6 @@ add_definitions(${NANOGUI_EXTRA_DEFS})
 
 add_subdirectory(lib/Box2D-cmake)
 
-set(SOURCE_FILES main.cpp game.cpp menu.cpp physicshelper.cpp inputmanager.cpp debugdraw.cpp)
+set(SOURCE_FILES main.cpp game.cpp menu.cpp physicshelper.cpp inputmanager.cpp debugdraw.cpp shapes/shape.cpp shapes/rectangle.cpp)
 add_executable(Editor ${SOURCE_FILES})
 target_link_libraries(Editor Box2D-cmake nanogui ${NANOGUI_EXTRA_LIBS})

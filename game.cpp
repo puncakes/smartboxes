@@ -20,12 +20,12 @@ Game::Game()
     mMenu = new Menu(*mScreen);
 
     //create callbacks for input events
-    auto menuMousePosTuple = std::make_tuple("menu",
+    auto mousePosTuple = std::make_tuple("pos",
         [=](double x, double y) {
             return mMenu->cursor_position_callback(x,y);
     });
 
-    auto screenMousePosTuple = std::make_tuple("screen",
+    auto menuMousePosTuple = std::make_tuple("menu",
         [=](double x, double y) {
             return mScreen->cursorPosCallbackEvent(x,y);
     });
@@ -41,11 +41,11 @@ Game::Game()
     });
 
     //events are processed in queue priority
-    //general idea is a callback returns false if it consumed the input
+    //general idea is a callback returns true if it consumed the input
 
     //mouse position callback queue
     InputManager::addMousePositionCallback(std::move(menuMousePosTuple));
-    InputManager::addMousePositionCallback(std::move(screenMousePosTuple));
+    InputManager::addMousePositionCallback(std::move(mousePosTuple));
 
     //mouse button callback queue
     InputManager::addMouseButtonCallback(std::move(menuMouseButtonTuple));
@@ -118,6 +118,7 @@ void Game::game_loop()
             glClear(GL_COLOR_BUFFER_BIT);
 
             mWorld->Step(timeDelta, 10, 10);
+
             //glFlush();
             //draw box2d debug info
             mWorld->DrawDebugData();
@@ -211,7 +212,6 @@ void Game::init_glfw()
     //g_camera.m_center.Set(mScreen->width() / 2, mScreen->height() / 2);
     g_camera.m_center.Set(0,0);
 
-    g_camera.m_zoom = 1.0f / 2.0f;
 }
 
 void Game::update(double timeDelta)
