@@ -4,3 +4,6 @@
 [submodule "lib/Box2D-cmake"]
 	path = lib/Box2D-cmake
 	url = https://github.com/tobanteGaming/Box2D-cmake.git
+[submodule "lib/json"]
+	path = lib/json
+	url = https://github.com/nlohmann/json.git
