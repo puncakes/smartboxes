@@ -26,6 +26,6 @@ include_directories(lib/easyloggingpp/src)
 
 file(COPY configs DESTINATION ${CMAKE_BINARY_DIR})
 
-set(SOURCE_FILES main.cpp game.cpp menu.cpp physicshelper.cpp inputmanager.cpp debugdraw.cpp shapes/shape.cpp shapes/rectangle.cpp lib/easyloggingpp/src/easylogging++.cc)
+set(SOURCE_FILES main.cpp game.cpp menu.cpp physicshelper.cpp inputmanager.cpp debugdraw.cpp shapes/shape.cpp shapes/rectangle.cpp lib/easyloggingpp/src/easylogging++.cc commandmanager.cpp commandmanager.h Commands/CreateBoxCommand.cpp Commands/CreateBoxCommand.h Commands/Box2DCommand.cpp Commands/Box2DCommand.h)
 add_executable(Editor ${SOURCE_FILES})
 target_link_libraries(Editor Box2D-cmake nanogui ${NANOGUI_EXTRA_LIBS} nlohmann_json)

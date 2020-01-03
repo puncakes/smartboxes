@@ -118,7 +118,7 @@ void Game::game_loop()
             //Clear information from last draw
             glClear(GL_COLOR_BUFFER_BIT);
 
-            mWorld->Step(timeDelta, 10, 10);
+            mWorld->Step(-timeDelta, 10, 10);
 
             //glFlush();
             //draw box2d debug info
