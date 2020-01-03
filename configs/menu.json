@@ -1,0 +1,34 @@
+{
+    "windows": [
+    	{
+	        "name": "test window",
+	        "pos": {
+	            "x": 15,
+	            "y": 15
+	        },
+	        "widgets": [
+	            {
+	                "button": {
+	                    "text": "Test Button",
+	                    "action": "action"
+	                }
+	            }
+	        ]
+	    },
+	    {
+	        "name": "window test!",
+	        "pos": {
+	            "x": 300,
+	            "y": 300
+	        },
+	        "widgets": [
+	            {
+	                "button": {
+	                    "text": "Test Button",
+	                    "action": "action"
+	                }
+	            }
+	        ]
+	    }
+	]
+}

@@ -18,6 +18,7 @@ Game::Game()
     InputManager::registerWithGLFW(*mScreen->glfwWindow());
 
     mMenu = new Menu(*mScreen);
+	mMenu->parseConfig("configs/menu.json");
 
     //create callbacks for input events
     auto mousePosTuple = std::make_tuple("pos",
@@ -216,5 +217,5 @@ void Game::init_glfw()
 
 void Game::update(double timeDelta)
 {
-    mMenu->moveTextBox(timeDelta);
+    mMenu->update(timeDelta);
 }
