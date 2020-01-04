@@ -3,6 +3,8 @@
 #include "inputmanager.h"
 
 #include "debugdraw.h"
+#include "Commands/LambdaCommand.h"
+#include "commandmanager.h"
 
 #include <GLFW/glfw3.h>
 #include <chrono>
@@ -118,7 +120,7 @@ void Game::game_loop()
             //Clear information from last draw
             glClear(GL_COLOR_BUFFER_BIT);
 
-            mWorld->Step(-timeDelta, 10, 10);
+            mWorld->Step(timeDelta, 10, 10);
 
             //glFlush();
             //draw box2d debug info
@@ -174,7 +176,9 @@ bool Game::mouseButtonEvent(int button, int action, int modifiers)
         if (action == GLFW_RELEASE)
         {
             //create box on release
-            PhysicsHelper::createBox(mWorld.get(), pw.x, pw.y);
+            LambdaCommand* command = new LambdaCommand();
+            command->executeLambda = [&]() { PhysicsHelper::createBox(mWorld.get(), pw.x, pw.y); };
+            CommandManager::Execute(command);
         }
     }
 

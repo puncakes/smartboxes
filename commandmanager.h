@@ -10,19 +10,19 @@ public:
     CommandManager();
     virtual ~CommandManager();
 
-    void Execute(ICommand* command);
-    void Undo();
-    void Redo();
+    static void Execute(ICommand* command);
+    static void Undo();
+    static void Redo();
 
     //unused atm
-    void Store(ICommand* command);
-    void CheckTriggers();
+    static void Store(ICommand* command);
+    static void CheckTriggers();
 
 private:
-    std::queue<ICommand*> mExecutedCommands;
+    static std::queue<ICommand*> mExecutedCommands;
 
     //unused atm. for command triggers
-    std::vector<ICommand*> mStoredCommands;
+    static std::vector<ICommand*> mStoredCommands;
 
 };
 

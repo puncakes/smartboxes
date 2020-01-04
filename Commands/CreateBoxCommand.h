@@ -1,7 +1,3 @@
-//
-// Created by Radl, Adam J. on 1/3/20.
-//
-
 #ifndef EDITOR_CREATEBOXCOMMAND_H
 #define EDITOR_CREATEBOXCOMMAND_H
 
