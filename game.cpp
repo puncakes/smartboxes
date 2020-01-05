@@ -3,7 +3,7 @@
 #include "inputmanager.h"
 
 #include "debugdraw.h"
-#include "Commands/LambdaCommand.h"
+#include "Commands/CreateBoxCommand.h"
 #include "commandmanager.h"
 
 #include <GLFW/glfw3.h>
@@ -43,6 +43,11 @@ Game::Game()
             return this->mouseButtonEvent(button, action, modifiers);
     });
 
+    auto gameKeyPressTuple = std::make_tuple("game",
+        [=](int key, int scancode, int action, int mods) {
+            return this->keypressEvent(key, scancode, action, mods);
+    });
+
     //events are processed in queue priority
     //general idea is a callback returns true if it consumed the input
 
@@ -53,6 +58,9 @@ Game::Game()
     //mouse button callback queue
     InputManager::addMouseButtonCallback(std::move(menuMouseButtonTuple));
     InputManager::addMouseButtonCallback(std::move(gameMouseButtonTuple));
+
+    //keypress callback queue
+    InputManager::addKeyCallback(std::move(gameKeyPressTuple));
 
     mWorld = std::make_unique<b2World>(b2Vec2(0, -9.8f));
 
@@ -176,12 +184,19 @@ bool Game::mouseButtonEvent(int button, int action, int modifiers)
         if (action == GLFW_RELEASE)
         {
             //create box on release
-            LambdaCommand* command = new LambdaCommand();
-            command->executeLambda = [&]() { PhysicsHelper::createBox(mWorld.get(), pw.x, pw.y); };
+			CreateBoxCommand* command = new CreateBoxCommand(*mWorld.get(), pw);
             CommandManager::Execute(command);
         }
     }
 
+    return true;
+}
+
+bool Game::keypressEvent(int key, int scancode, int action, int mods)
+{
+    if(key == GLFW_KEY_Z && action == GLFW_RELEASE && mods == GLFW_MOD_CONTROL) {
+        CommandManager::UndoLastCommand();
+    }
     return true;
 }
 

@@ -28,12 +28,14 @@ private:
 
 
     bool mouseButtonEvent(int button, int action, int modifiers);
+    bool keypressEvent(int key, int scancode, int action, int mods);
 
     //perform update of game state
     //passing in time delta since last update
     void update(double timeDelta);
 
     std::unique_ptr<b2World> mWorld;
+
 
 
 };

@@ -3,7 +3,8 @@
 
 #include "Commands/ICommand.h"
 
-#include <queue>
+#include <stack>
+#include <vector>
 
 class CommandManager {
 public:
@@ -11,7 +12,7 @@ public:
     virtual ~CommandManager();
 
     static void Execute(ICommand* command);
-    static void Undo();
+    static void UndoLastCommand();
     static void Redo();
 
     //unused atm
@@ -19,7 +20,7 @@ public:
     static void CheckTriggers();
 
 private:
-    static std::queue<ICommand*> mExecutedCommands;
+    static std::stack<ICommand*> mExecutedCommands;
 
     //unused atm. for command triggers
     static std::vector<ICommand*> mStoredCommands;
