@@ -10,3 +10,6 @@
 [submodule "lib/easyloggingpp"]
 	path = lib/easyloggingpp
 	url = https://github.com/amrayn/easyloggingpp.git
+[submodule "lib/SOIL"]
+	path = lib/SOIL
+	url = https://github.com/kbranigan/Simple-OpenGL-Image-Library.git

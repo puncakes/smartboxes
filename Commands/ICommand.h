@@ -15,7 +15,6 @@ public:
     //prolly won't use this but it's a cool idea
     virtual bool Triggered() { return false; };
 
-	//to be used in a lambda command only
     std::function<void()> executeLambda = nullptr;
     std::function<void()> undoLambda = nullptr;
 };
