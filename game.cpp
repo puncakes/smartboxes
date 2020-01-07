@@ -114,8 +114,6 @@ void Game::game_loop()
             double timeDelta = std::chrono::duration<double, std::milli>(timeNow - prevUpdateTimeInMills).count();
             timeDelta /= 1000.0; // in seconds
 
-            //std::cout << std::to_string(timeDelta) << std::endl;
-
             if (!mScreen->visible()) {
                 continue;
             } else if (glfwWindowShouldClose(mScreen->glfwWindow())) {
