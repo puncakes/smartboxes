@@ -1,5 +1,5 @@
-//
-// Created by Radl, Adam J. on 1/7/20.
-//
-
 #include "Robot.h"
+
+void Robot::addRobotPart(std::unique_ptr<IRobotPart> part) {
+    mRobotParts.push_back(std::move(part));
+}

@@ -13,11 +13,11 @@
 
 class RBody : public IRobotPart{
 public:
-    RBody(b2Body* body);
+    RBody(b2Body& body);
+    void setTexture(const char* texturePath);
     void Draw() override;
 
 private:
-    void init();
     //physics body
     b2Body* mBody;
 

@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <Box2D/Dynamics/b2Body.h>
+#include "RobotParts/IRobotPart.h"
 
 class Robot {
 public:
@@ -11,10 +12,11 @@ public:
 
     void Draw();
 
-    void addRobotPart(IRobotPart);
+    void addRobotPart(std::unique_ptr<IRobotPart> part);
 
 private:
-    std::vector<IRobotPart> mRobotParts;
+    std::vector<std::unique_ptr<IRobotPart>> mRobotParts;
+
 };
 
 
