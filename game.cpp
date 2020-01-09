@@ -223,8 +223,11 @@ void Game::init_glfw()
 
     mGLFWindow = mScreen->glfwWindow();
 
-    g_camera.m_width = mScreen->width();
-    g_camera.m_height = mScreen->height();
+	int width, height;
+	glfwGetWindowSize(mGLFWindow, &width, &height);
+
+    g_camera.m_width = width;
+    g_camera.m_height = height;
 
     //set camera to map pixels to world coordinates initially
     //g_camera.m_center.Set(mScreen->width() / 2, mScreen->height() / 2);
