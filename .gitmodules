@@ -13,3 +13,6 @@
 [submodule "lib/SOIL"]
 	path = lib/SOIL
 	url = https://github.com/kbranigan/Simple-OpenGL-Image-Library.git
+[submodule "lib/glm"]
+    path = lib/glm
+    url = https://github.com/g-truc/glm.git
