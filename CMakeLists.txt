@@ -29,7 +29,7 @@ include_directories(lib/easyloggingpp/src)
 
 file(COPY configs DESTINATION ${CMAKE_BINARY_DIR})
 
-set(SOURCE_FILES main.cpp game.cpp menu.cpp physicshelper.cpp inputmanager.cpp debugdraw.cpp shapes/shape.cpp shapes/rectangle.cpp lib/easyloggingpp/src/easylogging++.cc commandmanager.cpp Commands/CreateBoxCommand.cpp Commands/LambdaCommand.cpp Commands/LambdaCommand.h Robot.cpp Robot.h RobotParts/IRobotPart.h RobotParts/RBody.cpp RobotParts/RBody.h GraphicsHelper.cpp GraphicsHelper.h)
+set(SOURCE_FILES main.cpp game.cpp menu.cpp physicshelper.cpp inputmanager.cpp debugdraw.cpp shapes/shape.cpp shapes/rectangle.cpp lib/easyloggingpp/src/easylogging++.cc commandmanager.cpp Commands/CreateBoxCommand.cpp Commands/LambdaCommand.cpp Commands/LambdaCommand.h Robot.cpp Robot.h RobotParts/IRobotPart.h RobotParts/RBody.cpp RobotParts/RBody.h GraphicsHelper.cpp GraphicsHelper.h Commands/CreateRobotCommand.cpp Commands/CreateRobotCommand.h)
 add_executable(Editor ${SOURCE_FILES})
 
 target_link_libraries(Editor Box2D-cmake nanogui ${NANOGUI_EXTRA_LIBS} nlohmann_json SOIL)
