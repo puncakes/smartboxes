@@ -223,6 +223,12 @@ void Game::init_glfw()
 
     mGLFWindow = mScreen->glfwWindow();
 
+    //get the shading language version
+    const char *version = (const char *) glGetString(GL_SHADING_LANGUAGE_VERSION);
+
+    //print the version
+    std::cout << "GLSL version: " << version << std::endl;
+
 	int width, height;
 	glfwGetWindowSize(mGLFWindow, &width, &height);
 
