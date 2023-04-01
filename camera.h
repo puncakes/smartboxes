@@ -6,41 +6,35 @@
 #define EDITOR_CAMERA_H
 
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
-//contains common camera properties (position, zoom, front vector, up vector, etc.)
+//contains common camera properties (position, target, right, up, zoom)
 class GameCamera {
 public:
     GameCamera();
 
-    //getters
-    const glm::vec3& getPosition() const;
-    const glm::vec3& getFront() const;
-    const glm::vec3& getUp() const;
-    const glm::vec3& getRight() const;
-    const glm::vec3& getWorldUp() const;
-    const float& getZoom() const;
-    const float& getPitch() const;
-    const float& getYaw() const;
-    const float& getSpeed() const;
-    const float& getSensitivity() const;
+    void SetPosition(const glm::vec3& position);
+    void SetTarget(const glm::vec3& target);
+    void SetUp(const glm::vec3& up);
+    void SetZoom(float zoom);
 
-    //setters
-    void setPosition(const glm::vec3& position);
-    void setFront(const glm::vec3& front);
-    void setUp(const glm::vec3& up);
-    void setRight(const glm::vec3& right);
-    void setWorldUp(const glm::vec3& worldUp);
-    void setZoom(const float& zoom);
-    void setPitch(const float& pitch);
-    void setYaw(const float& yaw);
-    void setSpeed(const float& speed);
-    void setSensitivity(const float& sensitivity);
+    const glm::vec3& GetPosition() const;
+    const glm::vec3& GetTarget() const;
+    const glm::vec3 GetDirection() const;
+    const glm::vec3& GetRight() const;
+    const glm::vec3& GetUp() const;
+    float GetZoom() const;
 
-    //updates camera vectors
-    void updateCameraVectors();
+    glm::mat4 GetViewMatrix() const;
 
-    //returns the view matrix calculated using Euler Angles and the LookAt Matrix
-    glm::mat4 getViewMatrix();
+    //get projection matrix
+    glm::mat4 GetProjectionMatrix(float width, float height) const;
+
+private:
+    glm::vec3 mPosition;
+    glm::vec3 mTarget;
+    glm::vec3 mUp;
+    float mZoom;
 
 };
 

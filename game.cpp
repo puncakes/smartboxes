@@ -184,6 +184,7 @@ bool Game::mouseButtonEvent(int button, int action, int modifiers)
             //create box on release
 			CreateBoxCommand* command = new CreateBoxCommand(*mWorld.get(), pw);
             CommandManager::Execute(command);
+            CommandManager::Execute(command);
         }
     }
 

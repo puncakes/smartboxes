@@ -8,13 +8,16 @@
 
 #include <GLFW/glfw3.h>
 #include <map>
+#include "Shader.h"
 
 class GraphicsHelper {
 public:
     static GLuint LoadTexture2D(const char* texturePath);
+    static Shader LoadShader(const char* vertexPath, const char* fragmentPath);
 
 private:
     static std::map<const char*, GLuint> mTextureCache;
+    static std::map<const char*, Shader> mShaderCache;
 
 };
 
