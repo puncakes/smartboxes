@@ -6,7 +6,6 @@
 #include "Commands/CreateBoxCommand.h"
 #include "commandmanager.h"
 
-#include <GLFW/glfw3.h>
 #include <chrono>
 #include <iostream>
 #include <memory>

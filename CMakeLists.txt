@@ -17,6 +17,8 @@ include_directories(lib/glm)
 include_directories(${NANOGUI_EXTRA_INCS})
 add_definitions(${NANOGUI_EXTRA_DEFS})
 
+include_directories(lib/glm)
+
 add_subdirectory(lib/Box2D-cmake)
 
 set(JSON_BuildTests OFF CACHE INTERNAL "")
@@ -30,28 +32,10 @@ include_directories(lib/easyloggingpp/src)
 
 file(COPY configs DESTINATION ${CMAKE_BINARY_DIR})
 
-set(SOURCE_FILES
-        main.cpp
-        game.cpp
-        menu.cpp
-        physicshelper.cpp
-        inputmanager.cpp
-        debugdraw.cpp
-        shapes/shape.cpp
-        shapes/rectangle.cpp
-        lib/easyloggingpp/src/easylogging++.cc
-        commandmanager.cpp
-        Commands/CreateBoxCommand.cpp Commands/CreateBoxCommand.h
-        Commands/LambdaCommand.cpp Commands/LambdaCommand.h
-        Robot.cpp Robot.h
-        RobotParts/IRobotPart.h
-        RobotParts/RBody.cpp RobotParts/RBody.h
-        GraphicsHelper.cpp GraphicsHelper.h
-        Commands/CreateRobotCommand.cpp Commands/CreateRobotCommand.h
-        camera.cpp camera.h
+set(SOURCE_FILES main.cpp game.cpp menu.cpp physicshelper.cpp inputmanager.cpp debugdraw.cpp shapes/shape.cpp shapes/rectangle.cpp lib/easyloggingpp/src/easylogging++.cc commandmanager.cpp Commands/CreateBoxCommand.cpp Commands/LambdaCommand.cpp Commands/LambdaCommand.h Robot.cpp Robot.h RobotParts/IRobotPart.h RobotParts/RBody.cpp RobotParts/RBody.h GraphicsHelper.cpp GraphicsHelper.h Commands/CreateRobotCommand.cpp Commands/CreateRobotCommand.h
+        camera.cpp camera.h Sprite.cpp Sprite.h Shader.h Shader.cpp
         cursor_tools/ICursor.h
-        cursor_tools/create_box.cpp
-        )
+        cursor_tools/create_box.cpp)
 add_executable(smart_boxes ${SOURCE_FILES})
 
 target_link_libraries(smart_boxes Box2D-cmake nanogui ${NANOGUI_EXTRA_LIBS} nlohmann_json SOIL)

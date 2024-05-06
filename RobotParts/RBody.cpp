@@ -1,5 +1,5 @@
-#include "RBody.h"
 #include "../GraphicsHelper.h"
+#include "RBody.h"
 
 RBody::RBody(b2Body& body) {
     mBody = &body;
