@@ -114,6 +114,10 @@ void Game::game_loop()
             double timeDelta = std::chrono::duration<double, std::milli>(timeNow - prevUpdateTimeInMills).count();
             timeDelta /= 1000.0; // in seconds
 
+            //fixed time delta for simulations
+            //run as if 60fps is normal speed
+            //timeDelta = 0.016;
+
             if (!mScreen->visible()) {
                 continue;
             } else if (glfwWindowShouldClose(mScreen->glfwWindow())) {

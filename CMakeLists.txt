@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(Editor)
+project(smart_boxes)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 set(CMAKE_CXX_STANDARD 14)
@@ -13,6 +13,7 @@ add_compile_definitions(GL_SILENCE_DEPRECATION)
 
 add_subdirectory(lib/nanogui)
 include_directories(lib/nanogui/include)
+include_directories(lib/glm)
 include_directories(${NANOGUI_EXTRA_INCS})
 add_definitions(${NANOGUI_EXTRA_DEFS})
 
@@ -29,8 +30,28 @@ include_directories(lib/easyloggingpp/src)
 
 file(COPY configs DESTINATION ${CMAKE_BINARY_DIR})
 
-set(SOURCE_FILES main.cpp game.cpp menu.cpp physicshelper.cpp inputmanager.cpp debugdraw.cpp shapes/shape.cpp shapes/rectangle.cpp lib/easyloggingpp/src/easylogging++.cc commandmanager.cpp Commands/CreateBoxCommand.cpp Commands/LambdaCommand.cpp Commands/LambdaCommand.h Robot.cpp Robot.h RobotParts/IRobotPart.h RobotParts/RBody.cpp RobotParts/RBody.h GraphicsHelper.cpp GraphicsHelper.h Commands/CreateRobotCommand.cpp Commands/CreateRobotCommand.h
-        camera.cpp camera.h)
-add_executable(Editor ${SOURCE_FILES})
+set(SOURCE_FILES
+        main.cpp
+        game.cpp
+        menu.cpp
+        physicshelper.cpp
+        inputmanager.cpp
+        debugdraw.cpp
+        shapes/shape.cpp
+        shapes/rectangle.cpp
+        lib/easyloggingpp/src/easylogging++.cc
+        commandmanager.cpp
+        Commands/CreateBoxCommand.cpp Commands/CreateBoxCommand.h
+        Commands/LambdaCommand.cpp Commands/LambdaCommand.h
+        Robot.cpp Robot.h
+        RobotParts/IRobotPart.h
+        RobotParts/RBody.cpp RobotParts/RBody.h
+        GraphicsHelper.cpp GraphicsHelper.h
+        Commands/CreateRobotCommand.cpp Commands/CreateRobotCommand.h
+        camera.cpp camera.h
+        cursor_tools/ICursor.h
+        cursor_tools/create_box.cpp
+        )
+add_executable(smart_boxes ${SOURCE_FILES})
 
-target_link_libraries(Editor Box2D-cmake nanogui ${NANOGUI_EXTRA_LIBS} nlohmann_json SOIL)
+target_link_libraries(smart_boxes Box2D-cmake nanogui ${NANOGUI_EXTRA_LIBS} nlohmann_json SOIL)
