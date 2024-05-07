@@ -1,7 +1,7 @@
 #include "CreateBoxCommand.h"
 #include "../physicshelper.h"
 
-CreateBoxCommand::CreateBoxCommand(b2World & world, b2Vec2& worldPosition)
+CreateBoxCommand::CreateBoxCommand(b2World &world, b2Vec2& worldPosition)
 {
 	mWorld = &world;
 	mPosition = worldPosition;

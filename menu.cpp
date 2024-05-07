@@ -1,4 +1,6 @@
 #include "menu.h"
+#include "cursor_tools/create_box.h"
+#include "inputmanager.h"
 
 #include <nanogui/window.h>
 #include <nanogui/layout.h>
@@ -108,11 +110,14 @@ int Menu::addButton(nlohmann::json jsonItem, nanogui::Window& window)
 	if (jsonItem.contains("text")) {
 		b->setCaption(jsonItem["text"].get<std::string>());
 	}
-	if (jsonItem.contains("action")) {
-		//TODO::something besides exiting the application :P
-		b->setCallback([] {
-			exit(EXIT_SUCCESS);
-		});
-	}
+    if (jsonItem.contains("action")) {
+        if(jsonItem["action"]["type"].get<std::string>() == "set_cursor") {
+            b->setCallback([this, jsonItem] {
+                LOG(DEBUG) << "setting cursor to " << jsonItem["action"]["value"].get<std::string>();
+                CreateBoxCursor cursor;
+                InputManager::setCursor(&cursor);
+            });
+        }
+    }
 	return 0;
 }

@@ -3,6 +3,7 @@
 std::vector<MousePosCallback> InputManager::mMousePosCallbacks;
 std::vector<MouseButtonCallback> InputManager::mMouseButtonCallbacks;
 std::vector<KeyCallback> InputManager::mKeyCallbacks;
+ICursor* InputManager::mCursor;
 
 void InputManager::registerWithGLFW(GLFWwindow& window)
 {
@@ -64,4 +65,12 @@ void InputManager::mainKeyCallback(GLFWwindow *window, int key, int scancode, in
             break;
         }
     }
+}
+
+void InputManager::setCursor(ICursor *cursor) {
+    mCursor = cursor;
+}
+
+ICursor *InputManager::getCursor() {
+    return mCursor;
 }

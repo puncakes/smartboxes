@@ -10,7 +10,7 @@
 class CreateBoxCursor : public ICursor {
 public:
     CreateBoxCursor();
-    bool handleMouseInput(int button, int action, int modifiers) override;
+    bool handleMouseInput(b2World &world, double x, double y, int button, int action, int modifiers) override;
 
 private:
     int x1, y1, x2, y2;

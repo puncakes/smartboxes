@@ -10,7 +10,10 @@
 	            {
 	                "button": {
 	                    "text": "Test Button",
-	                    "action": "action"
+						"action": {
+							"type": "application",
+							"value": "exit"
+						}
 	                }
 	            }
 	        ]
@@ -25,7 +28,10 @@
 	            {
 	                "button": {
 	                    "text": "Test Button",
-	                    "action": "action"
+	                    "action": {
+							"type": "set_cursor",
+	                        "value": "create_box"
+						}
 	                }
 	            }
 	        ]

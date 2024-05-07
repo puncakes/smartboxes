@@ -5,6 +5,7 @@
 #include "debugdraw.h"
 #include "Commands/CreateBoxCommand.h"
 #include "commandmanager.h"
+#include "cursor_tools/create_box.h"
 
 #include <chrono>
 #include <iostream>
@@ -49,6 +50,9 @@ Game::Game()
 
     //events are processed in queue priority
     //general idea is a callback returns true if it consumed the input
+
+    CreateBoxCursor* cursor = new CreateBoxCursor();
+    InputManager::setCursor(cursor);
 
     //mouse position callback queue
     InputManager::addMousePositionCallback(std::move(menuMousePosTuple));
@@ -162,33 +166,9 @@ bool Game::mouseButtonEvent(int button, int action, int modifiers)
 {
     double xd, yd;
     glfwGetCursorPos(mScreen->glfwWindow(), &xd, &yd);
-    b2Vec2 ps((float32)xd, (float32)yd);
 
-    // Use the mouse to move things around.
-    if (button == GLFW_MOUSE_BUTTON_1)
-    {
-        //<##>
-        //ps.Set(0, 0);
-        b2Vec2 pw = g_camera.ConvertScreenToWorld(ps);
-        if (action == GLFW_PRESS)
-        {
-            if (modifiers == GLFW_MOD_SHIFT)
-            {
-                //test->ShiftMouseDown(pw);
-            }
-            else
-            {
-                //test->MouseDown(pw);
-            }
-        }
-
-        if (action == GLFW_RELEASE)
-        {
-            //create box on release
-			CreateBoxCommand* command = new CreateBoxCommand(*mWorld.get(), pw);
-            CommandManager::Execute(command);
-        }
-    }
+    ICursor* cursor = InputManager::getCursor();
+    cursor->handleMouseInput(*mWorld, xd, yd, button, action, modifiers);
 
     return true;
 }
