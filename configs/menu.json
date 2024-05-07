@@ -30,7 +30,7 @@
 	                    "text": "Test Button",
 	                    "action": {
 							"type": "set_cursor",
-	                        "value": "create_box"
+	                        "value": "create_robot"
 						}
 	                }
 	            }

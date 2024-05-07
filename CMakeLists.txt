@@ -31,11 +31,19 @@ include_directories(lib/SOIL/src)
 include_directories(lib/easyloggingpp/src)
 
 file(COPY configs DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY gfx DESTINATION ${CMAKE_BINARY_DIR})
 
-set(SOURCE_FILES main.cpp game.cpp menu.cpp physicshelper.cpp inputmanager.cpp debugdraw.cpp shapes/shape.cpp shapes/rectangle.cpp lib/easyloggingpp/src/easylogging++.cc commandmanager.cpp Commands/CreateBoxCommand.cpp Commands/LambdaCommand.cpp Commands/LambdaCommand.h Robot.cpp Robot.h RobotParts/IRobotPart.h RobotParts/RBody.cpp RobotParts/RBody.h GraphicsHelper.cpp GraphicsHelper.h Commands/CreateRobotCommand.cpp Commands/CreateRobotCommand.h
+set(SOURCE_FILES main.cpp game.cpp menu.cpp physicshelper.cpp inputmanager.cpp debugdraw.cpp shapes/shape.cpp shapes/rectangle.cpp lib/easyloggingpp/src/easylogging++.cc commandmanager.cpp Commands/CreateBoxCommand.cpp Commands/LambdaCommand.cpp Commands/LambdaCommand.h Robot.cpp Robot.h RobotParts/Entity.h RobotParts/RobotPart.cpp RobotParts/RobotPart.h GraphicsHelper.cpp GraphicsHelper.h Commands/CreateRobotCommand.cpp Commands/CreateRobotCommand.h
         camera.cpp camera.h Sprite.cpp Sprite.h Shader.h Shader.cpp
         cursor_tools/ICursor.h
-        cursor_tools/create_box.cpp)
+        cursor_tools/create_box.cpp
+        cursor_tools/select.cpp
+        cursor_tools/select.h
+        entitymanager.cpp
+        entitymanager.h
+        cursor_tools/create_robot.cpp
+        cursor_tools/create_robot.h)
 add_executable(smart_boxes ${SOURCE_FILES})
 
+target_compile_options(nanogui PUBLIC -w)
 target_link_libraries(smart_boxes Box2D-cmake nanogui ${NANOGUI_EXTRA_LIBS} nlohmann_json SOIL)

@@ -1,6 +1,7 @@
 #include "menu.h"
 #include "cursor_tools/create_box.h"
 #include "inputmanager.h"
+#include "cursor_tools/create_robot.h"
 
 #include <nanogui/window.h>
 #include <nanogui/layout.h>
@@ -112,11 +113,20 @@ int Menu::addButton(nlohmann::json jsonItem, nanogui::Window& window)
 	}
     if (jsonItem.contains("action")) {
         if(jsonItem["action"]["type"].get<std::string>() == "set_cursor") {
-            b->setCallback([this, jsonItem] {
-                LOG(DEBUG) << "setting cursor to " << jsonItem["action"]["value"].get<std::string>();
-                CreateBoxCursor* cursor = new CreateBoxCursor();
-                InputManager::setCursor(cursor);
-            });
+            if(jsonItem["action"]["value"].get<std::string>() == "create_box") {
+                b->setCallback([this, jsonItem] {
+                    LOG(DEBUG) << "setting cursor to " << jsonItem["action"]["value"].get<std::string>();
+                    CreateBoxCursor* cursor = new CreateBoxCursor();
+                    InputManager::setCursor(cursor);
+                });
+            }
+            else if(jsonItem["action"]["value"].get<std::string>() == "create_robot") {
+                b->setCallback([this, jsonItem] {
+                    LOG(DEBUG) << "setting cursor to " << jsonItem["action"]["value"].get<std::string>();
+                    CreateRobotCursor* cursor = new CreateRobotCursor();
+                    InputManager::setCursor(cursor);
+                });
+            }
         }
 
         if(jsonItem["action"]["type"].get<std::string>() == "application") {

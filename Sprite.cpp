@@ -3,6 +3,7 @@
 //
 
 #include "Sprite.h"
+#include <glad/glad.h>
 
 Sprite::Sprite(Shader &shader) {
     this->shader = shader;
@@ -13,7 +14,6 @@ void Sprite::initRenderData() {
     // configure VAO/VBO
     unsigned int VBO;
     float vertices[] = {
-            // pos      // tex
             0.0f, 1.0f, 0.0f, 1.0f,
             1.0f, 0.0f, 1.0f, 0.0f,
             0.0f, 0.0f, 0.0f, 0.0f,

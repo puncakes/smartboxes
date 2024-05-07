@@ -6,6 +6,7 @@
 #include "Commands/CreateBoxCommand.h"
 #include "commandmanager.h"
 #include "cursor_tools/create_box.h"
+#include "entitymanager.h"
 
 #include <chrono>
 #include <iostream>
@@ -134,6 +135,9 @@ void Game::game_loop()
             glClear(GL_COLOR_BUFFER_BIT);
 
             mWorld->Step(timeDelta, 10, 10);
+
+            //entity draw
+            EntityManager::Draw();
 
             //glFlush();
             //draw box2d debug info

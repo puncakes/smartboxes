@@ -4,25 +4,23 @@
 
 #include "CreateRobotCommand.h"
 #include "../physicshelper.h"
-#include "../RobotParts/RBody.h"
+#include "../entitymanager.h"
 
 CreateRobotCommand::CreateRobotCommand(b2World& world, b2Vec2& worldPosition) {
     mWorld = &world;
     mPosition = worldPosition;
-
-    //create robot body from mBody
-    mBody = PhysicsHelper::createBox(mWorld, mPosition.x, mPosition.y);
-    RBody* body = new RBody(*mBody);
-
-    //set RBody texture
-    body->setTexture("gfx/textures/robot_parts/chest1.png");
-
 }
 
 void CreateRobotCommand::Execute() {
     mBody = PhysicsHelper::createBox(mWorld, mPosition.x, mPosition.y);
+    mRobotPart = new RobotPart(*mBody);
+
+    //set RobotPart texture
+    mRobotPart->setTexture("gfx/textures/robot_parts/chest1.png");
+    EntityManager::AddEntity(mRobotPart);
 }
 
 void CreateRobotCommand::Undo() {
+    EntityManager::RemoveEntity(mRobotPart);
     mWorld->DestroyBody(mBody);
 }

@@ -5,15 +5,17 @@
 #ifndef EDITOR_RBODY_H
 #define EDITOR_RBODY_H
 
-
 #include <Box2D/Box2D.h>
 #include <GLFW/glfw3.h>
+#include "../Shader.h"
 
-#include "IRobotPart.h"
+#include "Entity.h"
+#include "../Sprite.h"
 
-class RBody : public IRobotPart{
+
+class RobotPart : public Entity{
 public:
-    RBody(b2Body& body);
+    RobotPart(b2Body& body);
     void setTexture(const char* texturePath);
     void Draw() override;
 
@@ -23,6 +25,8 @@ private:
 
     //sprite info
     GLuint mSpriteTexture;
+    Shader mShader;
+    Sprite* mSprite;
 
 };
 

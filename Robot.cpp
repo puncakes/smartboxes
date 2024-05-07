@@ -8,6 +8,6 @@ Robot::~Robot() {
 
 }
 
-void Robot::addRobotPart(std::unique_ptr<IRobotPart> part) {
+void Robot::addRobotPart(std::unique_ptr<Entity> part) {
     mRobotParts.push_back(std::move(part));
 }

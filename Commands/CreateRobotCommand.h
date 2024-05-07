@@ -9,8 +9,10 @@
 #include "ICommand.h"
 #include "Box2D/Box2D.h"
 #include "../Robot.h"
+#include "../RobotParts/RobotPart.h"
 
 class CreateRobotCommand : public ICommand {
+public:
     CreateRobotCommand(b2World& world, b2Vec2& worldPosition);
 
     void Execute() override;
@@ -22,6 +24,7 @@ private:
     b2World* mWorld = nullptr;
     b2Body* mBody = nullptr;
     b2Vec2 mPosition;
+    RobotPart *mRobotPart = nullptr;
 };
 
 
