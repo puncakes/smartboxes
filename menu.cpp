@@ -114,8 +114,14 @@ int Menu::addButton(nlohmann::json jsonItem, nanogui::Window& window)
         if(jsonItem["action"]["type"].get<std::string>() == "set_cursor") {
             b->setCallback([this, jsonItem] {
                 LOG(DEBUG) << "setting cursor to " << jsonItem["action"]["value"].get<std::string>();
-                CreateBoxCursor cursor;
-                InputManager::setCursor(&cursor);
+                CreateBoxCursor* cursor = new CreateBoxCursor();
+                InputManager::setCursor(cursor);
+            });
+        }
+
+        if(jsonItem["action"]["type"].get<std::string>() == "application") {
+            b->setCallback([this, jsonItem] {
+                exit(1);
             });
         }
     }

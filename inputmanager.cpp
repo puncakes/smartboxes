@@ -68,6 +68,8 @@ void InputManager::mainKeyCallback(GLFWwindow *window, int key, int scancode, in
 }
 
 void InputManager::setCursor(ICursor *cursor) {
+    //free previous cursor
+    delete mCursor;
     mCursor = cursor;
 }
 
