@@ -128,3 +128,13 @@ void Shader::checkCompileErrors(unsigned int object, std::string type)
         }
     }
 }
+
+void Shader::sCheckGLError()
+{
+    GLenum errCode = glGetError();
+    if (errCode != GL_NO_ERROR && errCode != 1282)
+    {
+        fprintf(stderr, "OpenGL error = %d\n", errCode);
+        assert(false);
+    }
+}
