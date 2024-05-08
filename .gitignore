@@ -4,7 +4,8 @@ lib/
 build/
 .vs/
 .idea/
-cmake-build-debug/
+cmake-build-*/
+glad/
 
 *~
 *.autosave

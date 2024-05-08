@@ -33,6 +33,11 @@ include_directories(lib/easyloggingpp/src)
 file(COPY configs DESTINATION ${CMAKE_BINARY_DIR})
 file(COPY gfx DESTINATION ${CMAKE_BINARY_DIR})
 
+if(APPLE)
+    include_directories(glad/include)
+    set(GLAD_SRC glad/src/glad.c)
+endif()
+
 set(SOURCE_FILES main.cpp game.cpp menu.cpp physicshelper.cpp inputmanager.cpp debugdraw.cpp shapes/shape.cpp shapes/rectangle.cpp lib/easyloggingpp/src/easylogging++.cc commandmanager.cpp Commands/CreateBoxCommand.cpp Commands/LambdaCommand.cpp Commands/LambdaCommand.h Robot.cpp Robot.h RobotParts/Entity.h RobotParts/RobotPart.cpp RobotParts/RobotPart.h GraphicsHelper.cpp GraphicsHelper.h Commands/CreateRobotCommand.cpp Commands/CreateRobotCommand.h
         camera.cpp camera.h Sprite.cpp Sprite.h Shader.h Shader.cpp
         cursor_tools/ICursor.h
@@ -42,8 +47,16 @@ set(SOURCE_FILES main.cpp game.cpp menu.cpp physicshelper.cpp inputmanager.cpp d
         entitymanager.cpp
         entitymanager.h
         cursor_tools/create_robot.cpp
-        cursor_tools/create_robot.h)
+        cursor_tools/create_robot.h
+        ${GLAD_SRC}
+)
 add_executable(smart_boxes ${SOURCE_FILES})
 
-target_compile_options(nanogui PUBLIC -w)
+target_compile_options(nanogui PRIVATE -Wall)
+
+if(APPLE)
+    target_compile_options(SOIL PRIVATE -framework CoreFoundation -Wno-deprecated)
+    target_link_options(SOIL PRIVATE -framework CoreFoundation -Wno-deprecated)
+endif ()
+
 target_link_libraries(smart_boxes Box2D-cmake nanogui ${NANOGUI_EXTRA_LIBS} nlohmann_json SOIL)
