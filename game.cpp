@@ -82,6 +82,9 @@ Game::Game()
 
     mWorld->SetDebugDraw(&g_debugDraw);
 
+    //init game camera
+    mCamera = new GameCamera(mWidth, mHeight);
+
 }
 Game::~Game() {
     delete mMenu;
@@ -129,7 +132,7 @@ void Game::game_loop()
                 continue;
             }
 
-            glClearColor( 0.0f, 0.0f, 0.0f, 1.0f ); //clear background screen to black
+            glClearColor( 0.2f, 0.2f, 0.2f, 1.0f );
 
             //Clear information from last draw
             glClear(GL_COLOR_BUFFER_BIT);
@@ -137,9 +140,8 @@ void Game::game_loop()
             mWorld->Step(timeDelta, 10, 10);
 
             //entity draw
-            EntityManager::Draw();
+            EntityManager::Draw(mCamera);
 
-            //glFlush();
             //draw box2d debug info
             mWorld->DrawDebugData();
             g_debugDraw.Flush();
@@ -206,7 +208,7 @@ void Game::init_glfw()
 
     glfwSetTime(0);
 
-    mScreen = new nanogui::Screen{{1280, 720}, "Editor", {}, false};
+    mScreen = new nanogui::Screen{{mWidth, mHeight}, "Editor", {}, false};
 
     mGLFWindow = mScreen->glfwWindow();
 

@@ -6,9 +6,11 @@
 #define EDITOR_Entity_H
 
 
+#include "../camera.h"
+
 class Entity {
 public:
-    virtual void Draw() = 0;
+    virtual void Draw(GameCamera *pCamera) = 0;
     bool isManaged = false;
     bool isSelected = false;
     bool isVisible = true;

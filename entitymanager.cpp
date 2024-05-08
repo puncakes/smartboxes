@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include "entitymanager.h"
+#include "camera.h"
 
 std::vector<Entity*> EntityManager::mEntities;
 
@@ -17,10 +18,10 @@ void EntityManager::RemoveEntity(Entity *entity) {
     mEntities.erase(std::remove(mEntities.begin(), mEntities.end(), entity), mEntities.end());
 }
 
-void EntityManager::Draw() {
+void EntityManager::Draw(GameCamera *pCamera) {
     for(auto& entity : mEntities) {
         if(entity->isVisible) {
-            entity->Draw();
+            entity->Draw(pCamera);
         }
     }
 }

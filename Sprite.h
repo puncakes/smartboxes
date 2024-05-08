@@ -7,13 +7,14 @@
 
 #include <glm/glm.hpp>
 #include "Shader.h"
+#include "camera.h"
 
 class Sprite {
 public:
     explicit Sprite(Shader &shader);
     ~Sprite();
 
-    void DrawSprite(unsigned int textureID, glm::vec2 position,
+    void DrawSprite(GameCamera* pCamera, unsigned int textureID, glm::vec2 position,
                     glm::vec2 size = glm::vec2(10.0f, 10.0f), float rotate = 0.0f,
                     glm::vec3 color = glm::vec3(1.0f));
 private:

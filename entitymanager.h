@@ -8,11 +8,12 @@
 
 #include <vector>
 #include "RobotParts/Entity.h"
+#include "camera.h"
 
 class EntityManager {
 public:
     EntityManager();
-    static void Draw();
+    static void Draw(GameCamera *pCamera);
     static void Update();
     static void AddEntity(Entity* entity);
     static void RemoveEntity(Entity* entity);

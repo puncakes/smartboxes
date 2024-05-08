@@ -4,6 +4,7 @@
 #include "glad/glad.h"
 #include <GLFW/glfw3.h>
 #include "menu.h"
+#include "camera.h"
 
 #include <nanogui/screen.h>
 #include <Box2D/Box2D.h>
@@ -20,6 +21,10 @@ private:
     Menu* mMenu;
     nanogui::Screen* mScreen;
     GLFWwindow* mGLFWindow;
+    GameCamera* mCamera;
+
+    float mWidth = 1200;
+    float mHeight = 720;
 
     bool mainloop_active = false;
 

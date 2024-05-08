@@ -17,7 +17,7 @@ class RobotPart : public Entity{
 public:
     RobotPart(b2Body& body);
     void setTexture(const char* texturePath);
-    void Draw() override;
+    void Draw(GameCamera *pCamera) override;
 
 private:
     //physics body
