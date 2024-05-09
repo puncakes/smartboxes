@@ -5,6 +5,8 @@
 #include <sstream>
 #include <fstream>
 
+#define GL_CLAMP_TO_EDGE 0x812F
+
 std::map<const char*, GLuint> GraphicsHelper::mTextureCache;
 std::map<const char*, Shader> GraphicsHelper::mShaderCache;
 

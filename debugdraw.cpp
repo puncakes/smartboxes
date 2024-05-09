@@ -23,11 +23,16 @@
 #include <OpenGL/gl3.h>
 #else
 #include "Testbed/glad/glad.h"
+#include "glm/gtc/type_ptr.hpp"
+
 #endif
 
 #include <GLFW/glfw3.h>
 #include <stdio.h>
 #include <stdarg.h>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 //#include <Testbed/imgui/imgui.h>
 
@@ -86,10 +91,14 @@ void Camera::BuildProjectionMatrix(float32* m, float32 zBias)
 	float32 h = float32(m_height);
 	float32 ratio = w / h;
     b2Vec2 extents(ratio * 25.0f, 25.0f);
+    //b2Vec2 extents(w / 2.0f, h / 2.0f);
     extents *= m_zoom;
 
 	b2Vec2 lower = m_center - extents;
 	b2Vec2 upper = m_center + extents;
+
+    //orthographic projection
+    auto ortho = glm::ortho(lower.x, upper.x, lower.y, upper.y, 1.2f, -0.8f);
 
 	m[0] = 2.0f / (upper.x - lower.x);
 	m[1] = 0.0f;
@@ -110,6 +119,10 @@ void Camera::BuildProjectionMatrix(float32* m, float32 zBias)
 	m[13] = -(upper.y + lower.y) / (upper.y - lower.y);
 	m[14] = zBias;
 	m[15] = 1.0f;
+
+    const float *pSource = (const float*)glm::value_ptr(ortho);
+    for (int i = 0; i < 16; ++i)
+        m[i] = pSource[i];
 }
 
 //

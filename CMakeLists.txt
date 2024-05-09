@@ -52,7 +52,9 @@ set(SOURCE_FILES main.cpp game.cpp menu.cpp physicshelper.cpp inputmanager.cpp d
 )
 add_executable(smart_boxes ${SOURCE_FILES})
 
-target_compile_options(nanogui PRIVATE -Wall)
+target_compile_options(nanogui PRIVATE -w)
+target_compile_options(nanogui-obj PRIVATE -w)
+
 
 if(APPLE)
     target_compile_options(SOIL PRIVATE -framework CoreFoundation -Wno-deprecated)

@@ -15,10 +15,12 @@ GameCamera::GameCamera(float width, float height) {
 }
 
 glm::mat4 GameCamera::GetViewMatrix() const {
+    return glm::mat4 (1.0f);
     return glm::lookAt(mPosition, mPosition + mTarget, mUp);
 }
 
 glm::mat4 GameCamera::GetProjectionMatrix() const {
+    return mOrtho;
     return glm::perspective(glm::radians(mZoom), mWidth / mHeight, 0.1f, 1000.0f);
 }
 
